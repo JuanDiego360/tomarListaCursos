@@ -1,6 +1,8 @@
 # Archivos de datos de usuario
 listas/*.csv
 listas/*.xlsx
+aplicacion_web/listas/*.csv
+aplicacion_web/listas/*.xlsx
 materias_dictadas.txt
 grados.txt
 
