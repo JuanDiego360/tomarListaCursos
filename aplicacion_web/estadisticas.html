@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estadísticas de Asistencia</title>
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #2c3e50;
+            --success-color: #27ae60;
+            --warning-color: #e74c3c;
+            --background-color: #f5f6fa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: var(--background-color);
+            color: var(--secondary-color);
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .resumen {
+            background-color: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .resumen h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .resumen-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .stat-card {
+            background-color: white;
+            padding: 1rem;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .stat-card .number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .alumnos-lista {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .alumno-card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .alumno-card h3 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .faltas-info {
+            margin-top: 1rem;
+        }
+
+        .faltas-numero {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--warning-color);
+        }
+
+        .sin-faltas {
+            color: var(--success-color);
+        }
+
+        .fechas-lista {
+            margin-top: 0.5rem;
+            list-style: none;
+        }
+
+        .fechas-lista li {
+            padding: 0.3rem 0;
+            color: var(--secondary-color);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .alumnos-lista {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Estadísticas de Asistencia</h1>
+            <p id="grado-info"></p>
+        </header>
+
+        <section class="resumen">
+            <h2>Resumen General</h2>
+            <div class="resumen-grid">
+                <div class="stat-card">
+                    <div class="number" id="total-alumnos">0</div>
+                    <div>Total de Alumnos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number" id="total-clases">0</div>
+                    <div>Clases Registradas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number" id="alumnos-sin-faltas">0</div>
+                    <div>Alumnos sin Faltas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number" id="alumnos-con-faltas">0</div>
+                    <div>Alumnos con Faltas</div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Detalle por Alumno</h2>
+            <div class="alumnos-lista" id="alumnos-container">
+                <!-- Los cards de alumnos se agregarán aquí dinámicamente -->
+            </div>
+        </section>
+
+        <footer>
+            <p>Sistema de Control Estudiantil JD</p>
+            <p>Juan Diego Florez Vera</p>
+        </footer>
+    </div>
+
+    <script>
+        // Obtener los datos de la URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const estadisticasData = JSON.parse(decodeURIComponent(urlParams.get('data')));
+
+        // Actualizar la información del grado
+        document.getElementById('grado-info').textContent = `Grado ${estadisticasData.grado}`;
+
+        // Actualizar estadísticas generales
+        const estudiantes = estadisticasData.estudiantes;
+        const fechas = estadisticasData.fechas;
+
+        document.getElementById('total-alumnos').textContent = estudiantes.length;
+        document.getElementById('total-clases').textContent = fechas.length;
+
+        const alumnosSinFaltas = estudiantes.filter(e => e.faltas === 0).length;
+        const alumnosConFaltas = estudiantes.filter(e => e.faltas > 0).length;
+
+        document.getElementById('alumnos-sin-faltas').textContent = alumnosSinFaltas;
+        document.getElementById('alumnos-con-faltas').textContent = alumnosConFaltas;
+
+        // Mostrar detalle por alumno
+        const alumnosContainer = document.getElementById('alumnos-container');
+        alumnosContainer.innerHTML = '';
+
+        estudiantes.forEach(estudiante => {
+            const card = document.createElement('div');
+            card.className = 'alumno-card';
+
+            const sinFaltas = estudiante.faltas === 0;
+            const porcentajeAsistencia = estudiante.porcentajeAsistencia.toFixed(1);
+
+            card.innerHTML = `
+                <h3>${estudiante.nombre}</h3>
+                <div class="faltas-info ${sinFaltas ? 'sin-faltas' : ''}">
+                    <div class="faltas-numero">
+                        ${sinFaltas ? 'Sin Faltas' : `${estudiante.faltas} Falta${estudiante.faltas > 1 ? 's' : ''}`}
+                    </div>
+                    <div>Asistencia: ${porcentajeAsistencia}%</div>
+                </div>
+                ${estudiante.fechasFalta.length > 0 ? `
+                    <div class="fechas-lista">
+                        <p>Fechas de inasistencia:</p>
+                        <ul>
+                            ${estudiante.fechasFalta.map(fecha => `<li>${fecha}</li>`).join('')}
+                        </ul>
+                    </div>
+                ` : ''}
+            `;
+
+            alumnosContainer.appendChild(card);
+        });
+
+
+    </script>
+</body>
+</html>

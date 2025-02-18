@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Control Estudiantil</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>¡Bienvenido al Sistema de Control Estudiantil JD!</h1>
+        </header>
+        
+        <main>
+            <div class="button-container">
+                <button id="btnCrearLista" type="button">Crear Nueva Lista</button>
+                <button id="btnCargarLista" type="button">Cargar Lista Existente</button>
+                <button id="btnEstadisticas" type="button">Estadística de la Lista</button>
+                <button id="btnCrearMateria" type="button">Crear Nueva Materia</button>
+                <button id="btnCargarMateria" type="button">Cargar Materia Existente</button>
+                <button id="btnEstadisticaMateria" type="button">Estadística de la Materia</button>
+            </div>
+        </main>
+
+        <!-- Modal para seleccionar lista -->
+        <div id="modalSeleccionarLista" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="cerrarModal('modalSeleccionarLista')">&times;</span>
+                <h2>Seleccionar Lista</h2>
+                <div class="form-group">
+                    <label for="selectLista">Seleccione un grado:</label>
+                    <select id="selectLista" required>
+                        <option value="">Seleccione un grado</option>
+                    </select>
+                </div>
+                <button onclick="cargarListaSeleccionada()">Cargar Lista</button>
+            </div>
+        </div>
+
+        <!-- Modal para seleccionar lista para estadísticas -->
+        <div id="modalSeleccionarListaEstadisticas" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="cerrarModal('modalSeleccionarListaEstadisticas')">&times;</span>
+                <h2>Seleccionar Lista para Estadísticas</h2>
+                <div class="form-group">
+                    <label for="selectListaEstadisticas">Seleccione un grado:</label>
+                    <select id="selectListaEstadisticas" required>
+                        <option value="">Seleccione un grado</option>
+                    </select>
+                </div>
+                <button onclick="mostrarEstadisticasLista()">Ver Estadísticas</button>
+            </div>
+        </div>
+
+        <!-- Modal para seleccionar materia para estadísticas -->
+        <div id="modalSeleccionarMateria" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="cerrarModal('modalSeleccionarMateria')">&times;</span>
+                <h2>Seleccionar Materia</h2>
+                <div class="form-group">
+                    <label for="selectMateriaEstadistica">Seleccione una materia:</label>
+                    <select id="selectMateriaEstadistica" required>
+                        <option value="">Seleccione una materia</option>
+                    </select>
+                </div>
+                <button onclick="mostrarEstadisticasMateria()">Ver Estadísticas</button>
+            </div>
+        </div>
+
+        <!-- Modal para crear nueva lista -->
+        <div id="modalNuevaLista" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Crear Nueva Lista</h2>
+                <div class="form-group">
+                    <label for="nombreCurso">Nombre del curso o grado:</label>
+                    <input type="text" id="nombreCurso" required>
+                </div>
+                <div class="form-group">
+                    <label for="numAlumnos">Número de alumnos:</label>
+                    <input type="number" id="numAlumnos" min="1" required>
+                </div>
+                <button onclick="registrarAlumnos()">Continuar</button>
+            </div>
+        </div>
+
+        <!-- Modal para ingresar nombres de alumnos -->
+        <div id="modalAlumnos" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Registrar Alumnos</h2>
+                <div id="alumnosContainer"></div>
+                <button onclick="guardarAlumnos()">Guardar Lista</button>
+            </div>
+        </div>
+
+        <!-- Modal para tomar asistencia -->
+        <div id="modalAsistencia" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Tomar Asistencia</h2>
+                <div class="form-group">
+                    <label for="fechaAsistencia">Fecha:</label>
+                    <input type="date" id="fechaAsistencia" required>
+                </div>
+                <div id="asistenciaContainer"></div>
+                <button onclick="guardarAsistencia()">Guardar Asistencia</button>
+            </div>
+        </div>
+
+        <!-- Modal para crear materia -->
+        <div id="modalMateria" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Crear Nueva Materia</h2>
+                <div class="form-group">
+                    <label for="gradoMateria">Seleccione el grado:</label>
+                    <select id="gradoMateria" required></select>
+                </div>
+                <div class="form-group">
+                    <label for="nombreMateria">Nombre de la materia:</label>
+                    <input type="text" id="nombreMateria" required>
+                </div>
+                <button onclick="guardarMateria()">Crear Materia</button>
+            </div>
+        </div>
+
+        <!-- Modal para cargar materia -->
+        <div id="modalCargarMateria" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="cerrarModal('modalCargarMateria')">&times;</span>
+                <h2>Cargar Materia</h2>
+                <div class="form-group">
+                    <label for="selectMateria">Seleccione una materia:</label>
+                    <select id="selectMateria" required>
+                        <option value="">Seleccione una materia</option>
+                    </select>
+                </div>
+                <button onclick="cargarMateriaSeleccionada()">Cargar Materia</button>
+            </div>
+        </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Juan Diego Florez Vera</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

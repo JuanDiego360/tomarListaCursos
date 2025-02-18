@@ -1,6 +1,11 @@
 # Sistema de Control de Asistencia Estudiantil
 
-Este es un sistema de gestión de asistencia para estudiantes desarrollado en Python utilizando la biblioteca Tkinter para la interfaz gráfica. Permite llevar un registro detallado de la asistencia de estudiantes de bachillerato, con funcionalidades para crear nuevas listas, registrar asistencias y ver estadísticas.
+Este es un sistema de gestión de asistencia para estudiantes que cuenta con dos versiones:
+
+1. **Versión de Escritorio**: Desarrollada en Python utilizando la biblioteca Tkinter para la interfaz gráfica.
+2. **Versión Web**: Desarrollada con HTML, CSS y JavaScript para el frontend, y Python (Flask) para el backend.
+
+Ambas versiones permiten llevar un registro detallado de la asistencia de estudiantes de bachillerato, con funcionalidades para crear nuevas listas, registrar asistencias y ver estadísticas.
 
 ## Características
 
@@ -18,22 +23,30 @@ Este es un sistema de gestión de asistencia para estudiantes desarrollado en Py
 - Almacenamiento automático en formato CSV con timestamp
 
 ### 3. Cargar Lista Existente
-- Selección de grado y carga automática de la lista más reciente
+- Interfaz mejorada con menús desplegables para selección de grados
 - Registro de asistencia por fecha (formato dd/mm/aaaa)
 - Marcación de asistencia mediante casillas de verificación
 - Actualización automática del archivo CSV con los registros de asistencia
+- Validación de datos y manejo de errores mejorado
 
 ### 4. Estadísticas de la Lista
-- Visualización de estadísticas por grado
-- Muestra del total de inasistencias
-- Detalle de fechas de ausencia
-- Identificación de estudiantes sin faltas
+- Interfaz moderna con resumen general y tarjetas individuales
+- Estadísticas detalladas incluyendo:
+  * Total de alumnos y clases registradas
+  * Número de alumnos con y sin faltas
+  * Porcentaje de asistencia por alumno
+  * Detalle de fechas de inasistencia
+- Diseño responsivo para mejor visualización
+- Identificación clara de estudiantes sin faltas mediante código de colores
 
 ### 5. Gestión de Materias
+- Interfaz intuitiva con menús desplegables para selección de materias
 - Creación de materias asociadas a grados
 - Registro de actividades y notas por materia
-- Soporte para notas porcentuadas
-- Escala de calificación personalizable (0-5 por defecto)
+- Sistema flexible de calificación:
+  * Soporte para notas porcentuadas
+  * Escala de calificación personalizable (0-5 por defecto)
+  * Validación en tiempo real de porcentajes y notas
 
 ### 6. Estadísticas de Materias
 - Visualización en formato tabla
@@ -45,20 +58,37 @@ Este es un sistema de gestión de asistencia para estudiantes desarrollado en Py
 ```
 tomador_de_lista/
 │
-├── interfazgrafica.py    # Archivo principal con la interfaz gráfica
-├── listas/               # Directorio donde se almacenan los archivos CSV
-│   ├── *.csv            # Archivos CSV de las listas de estudiantes
-│   └── *.xlsx           # Archivos Excel exportados de las materias
-├── grados.txt           # Registro centralizado de grados
-├── materias_dictadas.txt # Registro de materias por grado
-└── README.md            # Este archivo
+├── interfazgrafica.py      # Archivo principal con la interfaz gráfica (versión escritorio)
+├── aplicacion_web/         # Directorio de la versión web
+│   ├── index.html         # Página principal de la aplicación web
+│   ├── styles.css         # Estilos CSS
+│   ├── script.js          # Lógica del frontend
+│   ├── server.py          # Servidor backend en Flask
+│   ├── requirements.txt    # Dependencias de Python para el servidor
+│   └── listas/            # Directorio donde se almacenan los archivos CSV (versión web)
+├── listas/                 # Directorio donde se almacenan los archivos CSV (versión escritorio)
+│   ├── *.csv              # Archivos CSV de las listas de estudiantes
+│   └── *.xlsx             # Archivos Excel exportados de las materias
+├── grados.txt             # Registro centralizado de grados
+├── materias_dictadas.txt   # Registro de materias por grado
+└── README.md              # Este archivo
 ```
 
 ## Requisitos
+
+### Versión de Escritorio
 - Python 3.x
 - Tkinter (incluido en la instalación estándar de Python)
 - pandas (para manejo de datos y exportación a Excel)
 - openpyxl (para soporte de archivos Excel)
+
+### Versión Web
+- Python 3.12 o superior
+- Flask 3.0.0
+- Flask-CORS 4.0.0
+- pandas (para manejo de datos y exportación)
+- Navegador web moderno con soporte para ES6+
+- Conexión a internet para recursos web
 
 ## Instalación
 
@@ -72,10 +102,25 @@ git clone https://github.com/JuanDiego360/tomarListaCursos.git
 cd tomador_de_lista
 ```
 
+### Para la Versión de Escritorio
 3. Ejecuta el programa:
 ```bash
 python3 interfazgrafica.py
 ```
+
+### Para la Versión Web
+3. Instala las dependencias del servidor:
+```bash
+cd aplicacion_web
+pip install -r requirements.txt
+```
+
+4. Inicia el servidor:
+```bash
+python server.py
+```
+
+5. Abre `aplicacion_web/index.html` en tu navegador web
 
 ## Uso
 

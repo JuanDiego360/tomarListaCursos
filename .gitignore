@@ -1,0 +1,44 @@
+# Archivos de datos de usuario
+listas/*.csv
+listas/*.xlsx
+materias_dictadas.txt
+grados.txt
+
+# Archivos generados por Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Entorno virtual
+venv/
+env/
+.env/
+../aplicacion/
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Archivos de registro
+*.log
+
+# Archivos temporales
+*.tmp
+*~
+
+# Archivos de configuración local
+config.local.py
+settings.local.py
+
+# Archivos de caché del navegador
+.cache/
+.sass-cache/
+
+# Directorios de dependencias
+node_modules/
